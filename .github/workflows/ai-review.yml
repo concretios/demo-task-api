@@ -16,3 +16,4 @@ jobs:
       - uses: concretios/ai-pr-reviewer@v1
         with:
           gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
+          submit_review_verdict: true
