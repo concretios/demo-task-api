@@ -31,7 +31,7 @@ router.post('/', (req, res) => {
     createdAt: new Date().toISOString()
   };
   projects.push(project);
-  res.json(project); // Minor issue: should return 201
+  res.status(201).json(project);
 });
 
 // PUT /projects/:id
