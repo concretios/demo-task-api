@@ -1,10 +1,10 @@
-name: AI Code Review
+name: Dr. Concret.io Review
 on:
   pull_request:
     types: [opened, synchronize, reopened]
 
 jobs:
-  review:
+  diagnose:
     runs-on: ubuntu-latest
     permissions:
       contents: read
