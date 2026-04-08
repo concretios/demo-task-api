@@ -1,5 +1,6 @@
 const express = require('express');
 const tasksRouter = require('./routes/tasks');
+const tagsRouter = require('./routes/tags');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -11,6 +12,7 @@ app.get('/health', (req, res) => {
 });
 
 app.use('/tasks', tasksRouter);
+app.use('/tags', tagsRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
