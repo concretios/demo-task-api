@@ -1,4 +1,5 @@
 const express = require('express');
+const { validateTask } = require('../utils/task-validator');
 const router = express.Router();
 
 // In-memory task store
@@ -19,11 +20,25 @@ router.get('/:id', (req, res) => {
 
 // POST /tasks
 router.post('/', (req, res) => {
+  const result = validateTask(req.body);
+  if (!result.valid) {
+    return res.status(400).json({ errors: result.errors });
+  }
+
+  // INCONSISTENCY: validator allows priority and dueDate fields,
+  // but this destructuring only extracts title and description.
+  // A user could send { title: "x", priority: "high", dueDate: "2026-12-01" }
+  // and the validator would pass it, but the created task silently drops
+  // priority and dueDate.
   const { title, description } = req.body;
+
+  // INCONSISTENCY: this hardcodes a 100-char title limit,
+  // but the validator uses MAX_TITLE_LENGTH = 200.
+  // Titles between 101-200 chars pass validation but get truncated here.
   const task = {
     id: nextId++,
-    title,
-    description,
+    title: title.length > 100 ? title.slice(0, 100) : title,
+    description: description || '',
     completed: false,
     createdAt: new Date().toISOString()
   };
