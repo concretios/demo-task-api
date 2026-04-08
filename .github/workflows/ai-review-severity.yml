@@ -1,0 +1,21 @@
+name: AI Code Review (high severity only)
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: concretios/ai-pr-reviewer@v1
+        with:
+          gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
+          comment_severity_threshold: high
+          post_inline_comments: true
+          submit_review_verdict: true
