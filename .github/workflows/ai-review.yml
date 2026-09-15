@@ -44,7 +44,7 @@ jobs:
       queue: max
     steps:
       # Audited Dr. Concret.io release with compact requests and one main diagnosis.
-      - uses: concretios/ai-pr-reviewer@b2925fc25f964faab9ee0d9a2bcf15276316f96f
+      - uses: concretios/ai-pr-reviewer@f8abbdf3ccbe9fc2c86ac7bca524a915a2ea50af
         id: review
         with:
           github_token: ${{ github.token }}
